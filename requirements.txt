@@ -1,0 +1,15 @@
+streamlit>=1.39
+langchain>=0.3
+langchain-core>=0.3
+langchain-community>=0.3
+langchain-text-splitters>=0.3
+langchain-groq>=0.2
+langchain-huggingface>=0.1
+sentence-transformers>=3.0
+faiss-cpu>=1.8
+pypdf>=5.0
+docx2txt>=0.8
+python-pptx>=1.0
+openpyxl>=3.1
+beautifulsoup4>=4.12
+python-dotenv>=1.0
