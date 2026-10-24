@@ -43,8 +43,12 @@ class VectorIndex:
         if self.store is None:
             return [], 0.0
         t0 = time.perf_counter()
-        docs = self.store.similarity_search(query, k=k)
-        return docs, (time.perf_counter() - t0) * 1000
+        vec = self.embeddings.embed_query(query)
+        t1 = time.perf_counter()
+        docs = self.store.similarity_search_by_vector(vec, k=k)
+        t2 = time.perf_counter()
+        print(f"[timing] embed={(t1 - t0) * 1000:.1f} ms  faiss={(t2 - t1) * 1000:.1f} ms", flush=True)
+        return docs, (t2 - t0) * 1000
 
     def save(self, path: str = "faiss_index") -> None:
         if self.store:

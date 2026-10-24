@@ -13,10 +13,33 @@ def _doc(text: str, source: str, **meta) -> Document:
     return Document(page_content=text, metadata={"source": source, **meta})
 
 
+def _ocr_page(pdf, index) -> str:
+    """OCR one PDF page (needs tesseract + pytesseract + pypdfium2). Returns '' if unavailable."""
+    try:
+        import pytesseract
+        img = pdf[index].render(scale=2).to_pil()
+        return pytesseract.image_to_string(img)
+    except Exception:
+        return ""
+
+
 def _pdf(path: Path) -> List[Document]:
     from pypdf import PdfReader
     reader = PdfReader(str(path))
-    return [_doc(p.extract_text() or "", path.name, page=i + 1) for i, p in enumerate(reader.pages)]
+    pdf = None
+    docs = []
+    for i, page in enumerate(reader.pages):
+        text = (page.extract_text() or "").strip()
+        if len(text) < 150:  # little or no text layer: try OCR on the page image
+            try:
+                if pdf is None:
+                    import pypdfium2
+                    pdf = pypdfium2.PdfDocument(str(path))
+                text = (text + " " + _ocr_page(pdf, i)).strip()
+            except Exception:
+                pass
+        docs.append(_doc(text, path.name, page=i + 1))
+    return docs
 
 
 def _docx(path: Path) -> List[Document]:

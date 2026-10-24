@@ -17,6 +17,7 @@ st.set_page_config(page_title="RAG Chatbot", page_icon="📚", layout="wide")
 def get_index() -> VectorIndex:
     idx = VectorIndex()
     idx.load()
+    idx.embeddings.embed_query('warmup')
     return idx
 
 

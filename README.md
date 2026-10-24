@@ -1,6 +1,6 @@
 # 📚 LLM-Powered RAG Chatbot
 
-Conversational search over your documents using **LangChain, FAISS, Groq Llama 3.3 70B and Streamlit**.
+Conversational search over your documents using **LangChain, FAISS, Groq GPT-OSS-120B and Streamlit**.
 
 ## Features
 - Retrieval-Augmented Generation grounded in your documents, with source citations
@@ -12,7 +12,7 @@ Conversational search over your documents using **LangChain, FAISS, Groq Llama 3
 ## Architecture
 ```
 Files -> loaders -> chunking -> MiniLM embeddings -> FAISS
-Question -> condense (history) -> FAISS top-k -> Llama 3.3 70B (Groq) -> answer + sources
+Question -> condense (history) -> FAISS top-k -> GPT-OSS-120B (Groq) -> answer + sources
 ```
 
 ## Setup
@@ -40,3 +40,13 @@ benchmark.py        Latency benchmark
 
 ## License
 MIT
+
+## OCR for image-based PDF pages (optional)
+Slides and scans often keep their text inside images. If `tesseract` is installed, pages with little extractable text are OCR'd automatically:
+```bash
+brew install tesseract    # macOS (Linux: apt install tesseract-ocr)
+```
+Without it, the app still works and skips image-only pages.
+
+## Configuration
+Set `GROQ_MODEL` in `.env` to use a different Groq model (default: `openai/gpt-oss-120b`).

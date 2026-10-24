@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 faiss_index/
 .DS_Store
+big_docs/
+rag-chatbot/
