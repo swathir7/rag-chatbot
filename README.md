@@ -1,4 +1,4 @@
-# 📚 LLM-Powered RAG Chatbot
+# LLM-Powered RAG Chatbot
 
 Conversational search over your documents using **LangChain, FAISS, Groq GPT-OSS-120B and Streamlit**.
 
